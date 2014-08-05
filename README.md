@@ -7,10 +7,10 @@ To Use:
 -------
 1. In the image folder, insert your images. You must numerically categorize them in the following manner "category number - image number".
 For example, if you have two nature shots, and three exercise shots, you'd name the pictures:
-    1-1
-    1-2
-    2-1
-    2-2
+    1-1,
+    1-2,
+    2-1,
+    2-2,
     2-3
 
 2. Then in javascript/interact.js line 75 and 76, you'll see:

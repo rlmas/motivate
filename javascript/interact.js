@@ -1,5 +1,28 @@
 /*Variables
 ------------------------------------------------------------------------------------------------------------------------------*/
+var imageCategory = [
+    {name: 'men', observe: ko.observable(true), count:27},
+    {name: 'women', observe: ko.observable(true), count:20},
+    {name: 'nature', observe: ko.observable(true), count:5},
+    {name: 'military', observe: ko.observable(true), count:9},
+    {name: 'animals', observe: ko.observable(true), count:19}
+];
+
+var imageCatRange = ko.computed(function () {
+    var array = [];
+    var j=0;
+    for (var i=0; i<imageCategory.length; i++){
+        if (imageCategory[i].observe() == true){
+            array[j] = {
+                name: imageCategory[i].name,
+                count: imageCategory[i].count,
+            }
+            j++;
+        }
+    }
+    console.log(array);
+    return array;
+});
 
 //<span class="glyphicon glyphicon-play"></span>
 var quoteVars = {
@@ -14,7 +37,7 @@ var quoteVars = {
 
 /*Primary Function
 ------------------------------------------------------------------------------------------------------------------------------*/
-window.onload = function () {
+$(document).ready(function () {
     var timeCut = quoteVars.timeDuration*0.87;
     setupScreen();
     setupMusic();
@@ -22,8 +45,9 @@ window.onload = function () {
     setInterval(function(){
         setupAnimate();
         setupImage();
+        console.log('launch');
     }, timeCut);
-}
+});
 
 window.onresize = function () {
     resetScreen();
@@ -55,7 +79,7 @@ function setupAnimate () {
     quoteVars.quote = quotes[quoteVars.index].quote;
     quoteVars.author = quotes[quoteVars.index].author;
     
-    var topAdd = random(10, 200);
+    var topAdd = random(300, 400);
     topAdd+quotes[quoteVars.index].top;
 
     console.log(quoteVars.quote + ' - ' + quoteVars.author);
@@ -69,12 +93,15 @@ function setupAnimate () {
 }
 
 function setupImage () {
+    /*
+    random drawn between what was checked
+    - use the new array to determine where to pick pics from
+    */
     var fadeInImageWait = quoteVars.timeDuration * 0.05;
-    var fadeOutImageWait = quoteVars.timeDuration * 0.85;
+    var fadeOutImageWait = quoteVars.timeDuration * 0.75;
     
-    var imageRanges = [12,13,5,9];
-    var index = random(1, 2);
-    var imageName = (index+1) + '-' + random(1, imageRanges[index]);
+    var index = random(0, imageCatRange().length-1);
+    var imageName = imageCatRange()[index].name+'/'+random(1, imageCatRange()[index].count);
     
     $('.image').css('background-image', 'url("images/'+imageName+'.jpg")');
     
@@ -141,16 +168,16 @@ function fadeOut () {
     console.log('fade out');
     var leftTime = quoteVars.timeDuration*0.6/1000;
     var opacityTime = quoteVars.timeDuration*0.8/1000;
-    $('.quote').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'40%', 'opacity':1});
-    $('.author').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'50%', 'opacity':1});
+    //$('.quote').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'40%', 'opacity':1});
+    //$('.author').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'50%', 'opacity':1});
 }
 
 function exitOut () {
     console.log('fade out');
     var leftTime = quoteVars.timeDuration*0.1/1000;
-    var opacityTime = quoteVars.timeDuration*0.1/1000;
-    $('.quote').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'1500px', 'opacity':0});
-    $('.author').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'1500px', 'opacity':0});
+    var opacityTime = quoteVars.timeDuration*0.05/1000;
+    $('.quote').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'100%', 'opacity':0});
+    $('.author').css({'transition':'left '+leftTime+'s, opacity '+opacityTime+'s', '-webkit-transition':'left '+leftTime+'s, opacity '+opacityTime+'s', 'left':'100%', 'opacity':0});
 }
 
 /*Misc Functions
@@ -241,18 +268,18 @@ function timer(){
       var time = h_text+':'+m_text+':'+s_text+'.'+ms;
       $('.timer').html(time);
         
-    }, 100);
+    }, 80);
 }
 
 
 /*KO in Action
 ------------------------------------------------------------------------------------------------------------------------------*/
 
-window.onload()
-
 var viewModel = {
     music: music,
     quoteVars: quoteVars,
+    imageCategory: imageCategory,
+    imageCatRange: imageCatRange,
     changeLink: function (data) {
         console.log(data);
         for (var i=0; i<music.length; i++) {

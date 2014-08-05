@@ -20,11 +20,6 @@ var quotes = [
         top: 100
     },
     {
-        quote: "If you're dying...",
-        author: 'KEEP ON DYING!',
-        top: 100
-    },
-    {
         quote: 'LAST PUSH!',
         author: 'C'+"'"+'MON!',
         top: 100

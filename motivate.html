@@ -11,28 +11,36 @@
     <body>
         <h1 class="main-title">
             E N D U R E
-            <!--<input type="text" data-bind="value: quoteVars.timeDuration">-->
         </h1>
-        <div class="container">
-            <div class="img-quote-container">
-                <div class="quote-author-container">
-                    <div class="quote">Never give up</div>
-                    <div class="author"></div>
-                </div>
-                <div class="image">
-                    <!--<img src="images/img1.png" class="stretch" alt="" />-->
-                </div>
+        <div class='options'>
+            <div class='image-options' data-bind='foreach: imageCategory'>
+                <span data-bind='text: name'></span> <input type="checkbox" data-bind="checked: observe">
             </div>
-            <div class="aux-container">
-                <div class="play">
-                    <ul data-bind="foreach: music">
-                        <li class="play-list" data-bind="css: 'play-list '+genre">
-                            <a target="_blank" href="" data-bind="html: genre, click: $root.changeLink($data)"></span></a>
-                        </li>
-                    </ul>
+            <div class='option-title'>
+                <span class="glyphicon glyphicon-wrench"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="image">
+            </div>
+            <div class="sub-container">
+                <div class="img-quote-container">
+                    <div class="quote-author-container">
+                        <div class="quote">Never give up</div>
+                        <div class="author"></div>
+                    </div>
                 </div>
-                <div class="timer">
-                    <span>00</span>:<span>00</span>:<span>00</span>.<span>0</span>
+                <div class="aux-container">
+                    <div class="play">
+                        <ul data-bind="foreach: music">
+                            <li class="play-list" data-bind="css: 'play-list '+genre">
+                                <a target="_blank" href="" data-bind="html: genre, click: $root.changeLink($data)"></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="timer">
+                        <span>00</span>:<span>00</span>:<span>00</span>.<span>0</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,3 +54,11 @@
 
     </body>
 </html>
+
+<!--
+                F <input type="checkbox" data-bind="checked: imageCategory.women">
+                N <input type="checkbox" data-bind="checked: imageCategory.nature">
+                Mil <input type="checkbox" data-bind="checked: imageCategory.military">
+                A <input type="checkbox" data-bind="checked: imageCategory.animals">
+
+-->

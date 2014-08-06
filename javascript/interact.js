@@ -16,7 +16,7 @@ var imageCatRange = ko.computed(function () {
             array[j] = {
                 name: imageCategory[i].name,
                 count: imageCategory[i].count,
-            }
+            };
             j++;
         }
     }
@@ -250,6 +250,7 @@ function stopTimer () {
 }
 
 function continueTimer () {
+    clearInterval(timerVars.timerInterval);
     timer();
 }
 

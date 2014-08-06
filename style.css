@@ -223,12 +223,15 @@ body {
 
 .timer span{
     opacity:0.3;
-    transition: opacity 1s;
-    -webkit-transition: opacity 1s;
 }
 
 .timer:hover span{
-    opacity:0.1;
+    opacity:0.6;
+}
+
+.timer .glyphicon-refresh{
+    font-size:0.7em;
+    color:#eeeeee;
 }
 
 /*Responsive

@@ -211,23 +211,57 @@ function padstr(str, padcount, checker){
 var timerVars = {
     timerInterval: 0,
     beep1: new Audio("./sounds/beep1.wav"),
-    beep2: new Audio("./sounds/beep2.wav")    
+    beep2: new Audio("./sounds/beep2.wav"),
+    status: 0,
+    h: 0,
+    m: 0,
+    s: 0,
+    ms: 0
 };
 
-$('.timer').click(function(){
-    beginTimer();
+$('.timer-display').click(function (){
+    if (timerVars.status == 0){ // && timerVars.h == 0 && timerVars.m == 0 && timerVars.s == 0 && timerVars.ms == 0
+        continueTimer();
+        timerVars.status = 1;
+    }else if(timerVars.status == 1){ // && (timerVars.h != 0 || timerVars.m != 0 || timerVars.s != 0 || timerVars.ms != 0)
+        stopTimer();
+        timerVars.status = 0;
+    }
+});
+
+$('.timer .glyphicon-refresh').click(function () {
+    restartTimer();
 });
 
 $(window).keypress(function(event){
     if (event.which == 13 || event.which == 32){//- if you hit enter or space, it times
-        beginTimer();
+        if (timerVars.status == 0){ // && timerVars.h == 0 && timerVars.m == 0 && timerVars.s == 0 && timerVars.ms == 0
+            continueTimer();
+            timerVars.status = 1;
+        }else if(timerVars.status == 1){ // && (timerVars.h != 0 || timerVars.m != 0 || timerVars.s != 0 || timerVars.ms != 0)
+            stopTimer();
+            timerVars.status = 0;
+        }
     }
 });
 
-function beginTimer () {
+function stopTimer () {
     clearInterval(timerVars.timerInterval);
-    timer();     
 }
+
+function continueTimer () {
+    timer();
+}
+
+function restartTimer () {
+    clearInterval(timerVars.timerInterval);
+    timerVars.h = 0;
+    timerVars.m = 0;
+    timerVars.s = 0;
+    timerVars.ms = 0;
+    timer();
+}
+
 
 function timer(){
 
@@ -236,15 +270,20 @@ function timer(){
     var beep2_set = 0;
     if (interval < 14){beep2_set = 1;}
 
-    var h = 0;var m = 0;var s = 0;var ms = 0;var counter = 0;
+    /*var h = timerVars.h;
+    var m = timerVars.m;
+    var s = timerVars.s;
+    var ms = timerVars.ms;*/
+    
+    var counter = 0;
     var h_text;var m_text;var s_text;
 
     timerVars.timerInterval = setInterval(function(){
 
-      ms = ms + 1;
-      if (ms > 8){
-        ms = 0;
-        s = s + 1;
+      timerVars.ms = timerVars.ms + 1;
+      if (timerVars.ms > 8){
+        timerVars.ms = 0;
+        timerVars.s = timerVars.s + 1;
         counter = counter + 1;
         if (counter == interval){
           //timerVars.beep1.play();
@@ -253,20 +292,19 @@ function timer(){
           //timerVars.beep2.play();
         }
 
-
-        if (s > 59){
-          s = 0;
-          m = m + 1;
-          if (m > 59){
-             m = 0;
-             h = h + 1;
+        if (timerVars.s > 59){
+          timerVars.s = 0;
+          timerVars.m = timerVars.m + 1;
+          if (timerVars.m > 59){
+             timerVars.m = 0;
+             timerVars.h = timerVars.h + 1;
           }
         }
       }
-      s_text = padstr(s, 2, m);m_text = padstr(m, 2, h);h_text = padstr(h, 2);
+      s_text = padstr(timerVars.s, 2, timerVars.m);m_text = padstr(timerVars.m, 2, timerVars.h);h_text = padstr(timerVars.h, 2);
 
-      var time = h_text+':'+m_text+':'+s_text+'.'+ms;
-      $('.timer').html(time);
+      var time = h_text+':'+m_text+':'+s_text+'.'+timerVars.ms;
+      $('.timer-display').html(time);
         
     }, 80);
 }

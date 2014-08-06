@@ -5,25 +5,28 @@ Motivational Page that cycles through images, quotes and allows you to select tr
 
 To Use:
 -------
-1. In the image folder, insert your images. You must numerically categorize them in the following manner "category number - image number".
-For example, if you have two nature shots, and three exercise shots, you'd name the pictures:
-    1-1,
-    1-2,
-    2-1,
-    2-2,
-    2-3
+1. In the image folder, insert your jpeg images in the appropriate folders (or create your own) and number them incrementally. For example, if you have 4 pictures in the nature folder, number them: 1.jpg, 2.jpg, 3.jpg, 4.jpg.
 
-2. Then in javascript/interact.js line 75 and 76, you'll see:
-    var imageRanges = [12,13,5,9];
-    var index = random(1, 2);
+2. Then in javascript/interact.js line 3 you'll see:
+var imageCategory = [
+    ...
+];
 
-For Line 75
-In the first index of imageRanges, insert the number of images in category 1.
-In the second index of imageRanges, insert the number of images in category 2.
-If you have more categories, just insert the number of images in the third index, or fourth, etc.
+For every folder, add this line into the array:
+    var imageCategory = [
+        {name: '{name of folder}', observe: ko.observable(true), count:{number of images in the folder}},
+    }
 
-    var imageRanges = [2,3];
+    Eg:
+    var imageCategory = [
+        {name: 'nature', observe: ko.observable(true), count:30},
+        {name: 'animals', observe: ko.observable(true), count:25},
+    }
 
-For Line 76
-Choose the categories you want to page to cycle through for images
-    var index = random(1, 2);
+For the last entry, remove the last comma. In this case:
+    var imageCategory = [
+        {name: 'nature', observe: ko.observable(true), count:30},
+        {name: 'animals', observe: ko.observable(true), count:25}
+    }
+
+3. Open motivate.html with Chrome / DONE!

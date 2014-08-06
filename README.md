@@ -7,9 +7,9 @@ To Use:
 -------
 1. In the image folder, insert your jpeg images in the appropriate folders (or create your own) and number them incrementally. For example, if you have 4 pictures in the nature folder, number them:
 
-    1.jpg
-    2.jpg
-    3.jpg
+    1.jpg, 
+    2.jpg, 
+    3.jpg, 
     4.jpg
 
 2. Then in javascript/interact.js line 3 you'll see:
